@@ -13,8 +13,7 @@ class NavAdd(Component):
         return ''
                 
     def get_navigation_items(self, req):
-        add = self.env.config.get('navadd', 'add_items', ''). \
-                replace(',', ' ').split()
+        add = self.env.config.getlist('navadd', 'add_items', [])
         
         items = []
         for a in add:
@@ -22,7 +21,7 @@ class NavAdd(Component):
             url = self.env.config.get('navadd', '%s.url' % a)
             perm = self.env.config.get('navadd', '%s.perm' % a)
             target = self.env.config.get('navadd', '%s.target' % a)
-            forusers = self.env.config.get('navadd', '%s.forusers' % a, '').replace(',', ' ').split()
+            forusers = self.env.config.getlist('navadd', '%s.forusers' % a, [])
 
             if perm and not req.perm.has_permission(perm):
                 continue
