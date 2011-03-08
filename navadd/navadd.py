@@ -3,7 +3,7 @@ from trac.web.api import IRequestFilter
 from trac.web.chrome import INavigationContributor
 from trac.util import Markup
 
-from genshi.builder import tag
+from genshi.builder import tag, Element
 
 class NavAdd(Component):
     """ Allows to add items to main and meta navigation bar"""
