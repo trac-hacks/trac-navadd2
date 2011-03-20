@@ -51,7 +51,10 @@ class NavAdd(Component):
             if forusers and req.authname not in forusers:
                 continue
 
-            if not req.environ['PATH_INFO'].startswith(url):
+            try:
+                if not req.environ['PATH_INFO'].startswith(url):
+                    continue
+            except UnicodeDecodeError:
                 continue
 
             if target not in ('mainnav', 'metanav'):
