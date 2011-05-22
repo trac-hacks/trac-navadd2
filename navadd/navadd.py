@@ -37,13 +37,8 @@ class NavAdd(Component):
             if target not in ('mainnav', 'metanav'):
                 target = 'mainnav'
 
-            # TODO: Should be based on the current location on the site? So that also relative links could work?
-            res = resource.Resource('wiki', 'WikiStart')
-            ctx = mimeview.Context.from_request(req, res)
-            formatter = wiki.formatter.OneLinerFormatter(self.env, ctx)
-            out = StringIO()
-            formatter.format("[%s %s]" % (url, title), out)
-            link = Markup(out.getvalue())
+            ctx = mimeview.Context.from_request(req)
+            link = wiki.formatter.extract_link(self.env, ctx, "[%s %s]" % (url, title))
 
             yield (target, a, link)
 
