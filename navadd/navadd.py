@@ -1,3 +1,8 @@
+from StringIO import StringIO
+
+from trac import mimeview
+from trac import resource
+from trac import wiki
 from trac.core import *
 from trac.web.api import IRequestFilter
 from trac.web.chrome import INavigationContributor
@@ -32,7 +37,15 @@ class NavAdd(Component):
             if target not in ('mainnav', 'metanav'):
                 target = 'mainnav'
 
-            yield (target, a, tag.a(title, href=url))
+            # TODO: Should be based on the current location on the site? So that also relative links could work?
+            res = resource.Resource('wiki', 'WikiStart')
+            ctx = mimeview.Context.from_request(req, res)
+            formatter = wiki.formatter.OneLinerFormatter(self.env, ctx)
+            out = StringIO()
+            formatter.format("[%s %s]" % (url, title), out)
+            link = Markup(out.getvalue())
+
+            yield (target, a, link)
 
     # IRequestFilter methods
     def pre_process_request(self, req, handler):
