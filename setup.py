@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='NavAdd',
-      version='0.1',
+      version='0.1.1',
       packages=['navadd'],
       entry_points = {'trac.plugins': ['navadd = navadd']},
       package_data={'navadd' : ['templates/*.cs', 'htdocs/js/*.js', 'htdocs/css/*.css']},
